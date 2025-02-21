@@ -44,16 +44,20 @@ func Delete(db *badger.DB, key []byte) {
 	}
 }
 
-func Read(db *badger.DB, key []byte) []byte {
+func Read(db *badger.DB, key []byte) ([]byte, error) {
 	var value []byte
 	err := db.View(func(txn *badger.Txn) error {
 		item, err := txn.Get(key)
 
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 
 		val, err := item.ValueCopy(nil)
+
+		if err != nil {
+			log.Fatal("Unexpected behavior happen while copying the value")
+		}
 
 		value = val
 
@@ -61,10 +65,10 @@ func Read(db *badger.DB, key []byte) []byte {
 
 	})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	return value
+	return value, err
 
 }
