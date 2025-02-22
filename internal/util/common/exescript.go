@@ -3,11 +3,11 @@ package common
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os/exec"
+	"strings"
 )
 
-func ExecutePrevScript(script string, needle string) {
+func ExecutePrevScript(script string, needle string) bool {
 	scriptToEx := fmt.Sprintf(`%s %s`, script, needle)
 
 	startScript := exec.Command("powershell", "-Command",
@@ -18,22 +18,22 @@ func ExecutePrevScript(script string, needle string) {
 	outputOfStd, err := startScript.StdoutPipe()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while returning a StdoutPipe!")
+		fmt.Printf("%s", err)
+		fmt.Printf("%s", "Unpredictable behavior happens while returning a StdoutPipe!")
 	}
 
 	StderrPipe, err := startScript.StderrPipe()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while returning a StderrPipe!")
+		fmt.Printf("%s", err)
+		fmt.Printf("%s", "Unpredictable behavior happens while returning a StderrPipe!")
 	}
 
 	err = startScript.Start()
 
 	if err != nil {
-		fmt.Println("To preform the init command you must be opening your cmd/powershell as an administrator!")
-		log.Fatal("Unpredictable behavior happens while starting the process!")
+		fmt.Printf("To preform the init command you must be opening your cmd/powershell as an administrator!")
+		fmt.Printf("%s", "Unpredictable behavior happens while starting the process!")
 	}
 
 	outputBuffer := bufio.NewScanner(outputOfStd)
@@ -44,7 +44,7 @@ func ExecutePrevScript(script string, needle string) {
 			fmt.Println(outputBuffer.Text())
 		}
 		if err := outputBuffer.Err(); err != nil {
-			log.Fatal("Unpredictable behavior happens while outputing default buffer")
+			fmt.Printf("%s", "Unpredictable behavior happens while outputing default buffer")
 		}
 	}()
 
@@ -53,18 +53,17 @@ func ExecutePrevScript(script string, needle string) {
 			fmt.Println(errBuffer.Text())
 		}
 		if err := errBuffer.Err(); err != nil {
-			log.Fatal("Unpredictable behavior happens while outputing Error buffer")
+			fmt.Printf("%s", "Unpredictable behavior happens while outputing Error buffer")
 		}
 	}()
 
 	err = startScript.Wait()
 
 	if err != nil {
-		log.Fatal("Unpredictable behavior happens while wating process!")
+		fmt.Printf("%s", "Unpredictable behavior happens while wating process!")
 	}
 
-	fmt.Println("Choco Installed successfully")
-
+	return startScript.ProcessState.Success()
 }
 
 func ExecuteScript(script string, needle string) string {
@@ -75,54 +74,54 @@ func ExecuteScript(script string, needle string) string {
 	outputOfStd, err := startScript.StdoutPipe()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while returning a StdoutPipe!")
+		fmt.Printf("%s", err)
+		fmt.Printf("%s", "Unpredictable behavior happens while returning a StdoutPipe!")
 	}
 
 	StderrPipe, err := startScript.StderrPipe()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while returning a StderrPipe!")
+		fmt.Printf("%s", err)
+		fmt.Printf("%s", "Unpredictable behavior happens while returning a StderrPipe!")
 	}
 
 	err = startScript.Start()
 
 	if err != nil {
-		fmt.Println("To preform the init command you must be opening your cmd/powershell as an administrator!")
-		log.Fatal("Unpredictable behavior happens while starting the process!")
+		fmt.Printf("To preform the init command you must be opening your cmd/powershell as an administrator!")
+		fmt.Printf("%s", "Unpredictable behavior happens while starting the process!")
 	}
 
 	outputBuffer := bufio.NewScanner(outputOfStd)
 	errBuffer := bufio.NewScanner(StderrPipe)
 
-	resultBufer := ""
+	var resultBufer strings.Builder
 
 	go func() {
 		for outputBuffer.Scan() {
-			resultBufer += outputBuffer.Text() + "\n"
-			//fmt.Println(outputBuffer.Text())
+			resultBufer.WriteString(outputBuffer.Text() + "\n")
+			//fmt.Printf(outputBuffer.Text())
 		}
 		if err := outputBuffer.Err(); err != nil {
-			log.Fatal("Unpredictable behavior happens while outputing default buffer")
+			fmt.Printf("%s", "Unpredictable behavior happens while outputing default buffer")
 		}
 	}()
 
 	go func() {
 		for errBuffer.Scan() {
-			//fmt.Println(errBuffer.Text())
+			//fmt.Printf(errBuffer.Text())
 		}
 		if err := errBuffer.Err(); err != nil {
-			log.Fatal("Unpredictable behavior happens while outputing Error buffer")
+			fmt.Printf("%s", "Unpredictable behavior happens while outputing Error buffer")
 		}
 	}()
 
 	err = startScript.Wait()
 
 	if err != nil {
-		log.Fatal("Unpredictable behavior happens while wating process!")
+		fmt.Printf("%s", "Unpredictable behavior happens while wating process!")
 	}
 
-	return resultBufer
+	return resultBufer.String()
 
 }
