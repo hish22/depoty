@@ -1,7 +1,7 @@
 package initalization
 
 import (
-	"depoty/internal/badger"
+	"depoty/internal/badgers"
 	"fmt"
 
 	badgerdb "github.com/dgraph-io/badger/v4"
@@ -9,18 +9,18 @@ import (
 
 func EntryPoint() {
 
-	db := badger.MainDb()
+	db := badgers.MainDb()
 
 	defer db.Close()
 
-	item, err := badger.Read(db, []byte("initDone"))
+	item, err := badgers.Read(db, []byte("initDone"))
 
 	if err != nil {
 		fmt.Println(err)
 		if err == badgerdb.ErrKeyNotFound {
 			fmt.Println("Starting Initalization Process")
 
-			badger.Insert(db, []byte("initDone"), []byte("done"))
+			badgers.Insert(db, []byte("initDone"), []byte("done"))
 			// Install Related dependencies
 			InstallChoco()
 		}
