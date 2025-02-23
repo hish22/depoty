@@ -4,6 +4,7 @@ import (
 	"depoty/internal/deletion"
 	"depoty/internal/installation"
 	"depoty/internal/updation"
+	"fmt"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -37,7 +38,7 @@ func TuiStart() {
 	fetchInstalledPkgs(app, pkgInfo, packageTable)
 
 	// Fetch the found package information.
-	fetchFoundPkgs(app, pkgInfo, packageTable)
+	fetchFoundPkgs(app, pkgInfo, foundPkgsTable)
 
 	// Start searching by pressing Enter.
 	performSearchingOperation(installPkg, foundPkgsTable)
@@ -81,9 +82,6 @@ func TuiStart() {
 
 	// Handle the Update & Deletion button & press (To Trigger the process of Updation / Deletion)
 	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal)
-
-	// Search in installed packages
-	SearchInInstalledPkgs(installPkg, textPkgs, listOfPkgs, packageTable)
 
 	// Nabigation and focues change + Handle refresh trigger
 	// Also change the text under the search to blank if searchFlex losed focus
@@ -136,43 +134,23 @@ func TuiStart() {
 
 		// Refresh the installed packages
 		if event.Key() == tcell.KeyCtrlR {
-			ListWholePkgs(packageTable)
+			packageTable.Clear()
+			Contentlist, listOfPkgsToSearch := RefreshWholePkgs(packageTable)
+			listOfPkgs = listOfPkgsToSearch
+			for i, content := range Contentlist {
+				packageTable.SetCell(i, 0, tview.NewTableCell(content))
+			}
+			app.Suspend(func() {
+				fmt.Println("Refreshing App...")
+			})
 		}
-
-		// Already focuesd / no need to edit it
-		// var noEditForFound bool = false
-		// var noEditForInstalled bool = false
-
-		// // Change the frame text based on focusing components
-		// if app.GetFocus() == foundPkgsTable {
-		// 	// Show Installation key if it is focused on found packges
-		// 	if !noEditForFound {
-		// 		guideFrame.Clear().
-		// 			AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
-		// 			AddText("CTRL + D (Install package)", false, tview.AlignRight, tcell.ColorWhite)
-		// 		noEditForFound = true
-		// 		noEditForInstalled = false
-		// 	}
-		// 	// Show the Upgrade and Delete keys if it is focused on Installed Packages
-		// } else if app.GetFocus() == packageTable {
-		// 	if !noEditForInstalled {
-		// 		guideFrame.Clear().
-		// 			AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
-		// 			AddText("CTRL + U (Update package) / CTRL + Q (Delete package)", false, tview.AlignRight, tcell.ColorWhite)
-		// 		noEditForInstalled = true
-		// 		noEditForFound = false
-		// 	}
-		// 	// If the focues otherwise, then clear all and add the basic guide
-		// } else {
-		// 	guideFrame.Clear().
-		// 		AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite)
-		// 	noEditForFound = false
-		// 	noEditForInstalled = false
-		// }
 
 		return event
 
 	})
+
+	// Search in installed packages
+	SearchInInstalledPkgs(installPkg, textPkgs, listOfPkgs, packageTable)
 
 	// Change the nevigation data if it is focused in packagesTable
 	packageTable.SetFocusFunc(func() {

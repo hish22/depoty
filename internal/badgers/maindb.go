@@ -7,8 +7,8 @@ import (
 	badger "github.com/dgraph-io/badger/v4"
 )
 
-func MainDb() *badger.DB {
-	opts := badger.DefaultOptions("/tmp/badger")
+func MainDb(location string) *badger.DB {
+	opts := badger.DefaultOptions(location) // "/tmp/badger"
 	// opts.Logger = nil
 	db, err := badger.Open(opts)
 

@@ -11,7 +11,9 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			// listing.OutdatedList()
+			// db := badgers.MainDb("/tmp/badger")
+			// db.DropAll()
+			// db.Close()
 		},
 	}
 	core.RootCommand.AddCommand(TestCommand)

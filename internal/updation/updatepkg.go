@@ -8,7 +8,7 @@ import (
 func UpdatePkg(pkgName string) bool {
 
 	// Open Badger
-	db := badgers.MainDb()
+	db := badgers.MainDb("/tmp/badger/outdate")
 
 	// Close badger
 	defer db.Close()

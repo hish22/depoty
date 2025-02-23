@@ -16,15 +16,15 @@ var RootCommand = &cobra.Command{
 	Long:  "Depoty is an advanced extension of package managers, offering enhanced local management features for package handling and control.",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Open badger
-		db := badgers.MainDb()
+		dbConfig := badgers.MainDb("/tmp/badger/config")
 
 		fmt.Println("Checking Initialization Values..")
 		// Check if init process is done
-		if _, err := badgers.Read(db, []byte("initDone")); err != nil {
+		if _, err := badgers.Read(dbConfig, []byte("initDone")); err != nil {
 			log.Fatal("Please Start the Configuration process before using the TUI, type > Depoty init")
 		}
 
-		db.Close()
+		dbConfig.Close()
 
 		fmt.Println("Fetching Outdated Packages..")
 

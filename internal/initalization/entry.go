@@ -9,7 +9,7 @@ import (
 
 func EntryPoint() {
 
-	db := badgers.MainDb()
+	db := badgers.MainDb("/tmp/badger/config")
 
 	defer db.Close()
 
