@@ -1,22 +1,22 @@
-package updation
+package deletion
 
 import (
 	"depoty/internal/badgers"
 	"depoty/internal/util/common"
 )
 
-func UpdatePkg(pkgName string) bool {
+func DeletePkg(pkgName string) bool {
 
 	// Open Badger
 	db := badgers.MainDb()
 
-	// Close badger
+	// Close Badger
 	defer db.Close()
 
-	//Delete package from outdated packages
+	// Delete the cache of outdated package if it is deleted
 	if _, err := badgers.Read(db, []byte(pkgName)); err == nil {
 		badgers.Delete(db, []byte(pkgName))
 	}
 
-	return common.ExecutePrevScript("choco upgrade", pkgName+" -y")
+	return common.ExecutePrevScript("choco uninstall", pkgName+" -y")
 }

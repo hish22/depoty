@@ -6,7 +6,7 @@ import (
 	"github.com/rivo/tview"
 )
 
-func OperationOnPackage(msg string, callback func(string) bool, app *tview.Application, foundPkgsTable *tview.Table, packageTable *tview.Table, rowFlex *tview.Flex) *tview.Modal {
+func OperationOnPackage(msg string, callback func(string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex) *tview.Modal {
 	// Create Confimation box & Handle the installation process
 	return tview.NewModal().
 		SetText(msg). // "Are you sure you want to install this package?"
@@ -14,9 +14,9 @@ func OperationOnPackage(msg string, callback func(string) bool, app *tview.Appli
 		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
 			if buttonLabel == "Yes" {
 				// Get package name
-				r, _ := foundPkgsTable.GetSelection()
+				r, _ := PkgsTable.GetSelection()
 				// Find the selected row
-				pkgRow := foundPkgsTable.GetCell(r, 0).Text
+				pkgRow := PkgsTable.GetCell(r, 0).Text
 				// Split the text into slices to get the package name
 				pkgRowSlice := strings.Split(pkgRow, " ")
 				// Install package
@@ -24,15 +24,15 @@ func OperationOnPackage(msg string, callback func(string) bool, app *tview.Appli
 
 				if sucess {
 					// Update the Installed Packages list
-					ListWholePkgs(packageTable)
+					// ListWholePkgs(packageTable)
 					// Update the view
-					app.SetRoot(rowFlex, true).SetFocus(foundPkgsTable)
+					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
 				} else {
-					app.SetRoot(rowFlex, true).SetFocus(foundPkgsTable)
+					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
 				}
 
 			} else {
-				app.SetRoot(rowFlex, true).SetFocus(foundPkgsTable)
+				app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
 			}
 		})
 }
