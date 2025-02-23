@@ -77,11 +77,14 @@ func TuiStart() {
 	// Create Confirmation box & Handle the Deletion process
 	DeleteconfModal := OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex)
 
+	// Create Confirmation box & Handle the drop packages process
+	DropconfModal := DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex)
+
 	// Slice of keys
-	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ}
+	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF9}
 
 	// Handle the Update & Deletion button & press (To Trigger the process of Updation / Deletion)
-	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal)
+	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal, DropconfModal)
 
 	// Nabigation and focues change + Handle refresh trigger
 	// Also change the text under the search to blank if searchFlex losed focus
@@ -156,7 +159,7 @@ func TuiStart() {
 	packageTable.SetFocusFunc(func() {
 		guideFrame.Clear().
 			AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
-			AddText("CTRL + U (Update package) / CTRL + Q (Delete package)", false, tview.AlignRight, tcell.ColorWhite)
+			AddText("CTRL + U (Update package) / CTRL + Q (Delete package) / F9 (Drop All)", false, tview.AlignRight, tcell.ColorWhite)
 	})
 	// Change the nevigation data if it is focused in foundPkgsTable
 	foundPkgsTable.SetFocusFunc(func() {

@@ -10,10 +10,12 @@ import (
 func ExecutePrevScript(script string, needle string) bool {
 	scriptToEx := fmt.Sprintf(`%s %s`, script, needle)
 
-	startScript := exec.Command("powershell", "-Command",
-		"Start-Process", "powershell",
-		"-ArgumentList", `'-ExecutionPolicy', 'Bypass', '-Command', "`+scriptToEx+`"`,
-		"-Verb", "runAs")
+	// startScript := exec.Command("powershell", "-Command",
+	// 	"Start-Process", "powershell",
+	// 	"-ArgumentList", `'-ExecutionPolicy', 'Bypass', '-Command', "`+scriptToEx+`"`,
+	// 	"-Verb", "runAs")
+
+	startScript := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scriptToEx)
 
 	outputOfStd, err := startScript.StdoutPipe()
 
@@ -36,14 +38,25 @@ func ExecutePrevScript(script string, needle string) bool {
 		fmt.Printf("%s", "Unpredictable behavior happens while starting the process!")
 	}
 
+	const MaxSize = 1024 * 1024
+
+	// Increase the size of the buffer.
+	buffer := make([]byte, MaxSize)
+
 	outputBuffer := bufio.NewScanner(outputOfStd)
+
+	outputBuffer.Buffer(buffer, MaxSize)
+
 	errBuffer := bufio.NewScanner(StderrPipe)
+
+	errBuffer.Buffer(buffer, MaxSize)
 
 	go func() {
 		for outputBuffer.Scan() {
 			fmt.Println(outputBuffer.Text())
 		}
 		if err := outputBuffer.Err(); err != nil {
+			fmt.Println(err)
 			fmt.Printf("%s", "Unpredictable behavior happens while outputing default buffer")
 		}
 	}()
@@ -88,7 +101,7 @@ func ExecuteScript(script string, needle string) string {
 	err = startScript.Start()
 
 	if err != nil {
-		fmt.Printf("To preform the init command you must be opening your cmd/powershell as an administrator!")
+		fmt.Println("To preform the init command you must be opening your cmd/powershell as an administrator!")
 		fmt.Printf("%s", "Unpredictable behavior happens while starting the process!")
 	}
 
@@ -103,6 +116,7 @@ func ExecuteScript(script string, needle string) string {
 			//fmt.Printf(outputBuffer.Text())
 		}
 		if err := outputBuffer.Err(); err != nil {
+			fmt.Println(err)
 			fmt.Printf("%s", "Unpredictable behavior happens while outputing default buffer")
 		}
 	}()

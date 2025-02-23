@@ -2,6 +2,7 @@ package test
 
 import (
 	"depoty/cmd/cli/core"
+	"depoty/internal/installation"
 
 	"github.com/spf13/cobra"
 )
@@ -11,9 +12,7 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			// db := badgers.MainDb("/tmp/badger")
-			// db.DropAll()
-			// db.Close()
+			installation.InstallPkg("php")
 		},
 	}
 	core.RootCommand.AddCommand(TestCommand)

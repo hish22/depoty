@@ -15,14 +15,16 @@ func EntryPoint() {
 
 	item, err := badgers.Read(db, []byte("initDone"))
 
+	// Install Related dependencies
+	InstallChoco()
+
 	if err != nil {
 		fmt.Println(err)
 		if err == badgerdb.ErrKeyNotFound {
 			fmt.Println("Starting Initalization Process")
 
 			badgers.Insert(db, []byte("initDone"), []byte("done"))
-			// Install Related dependencies
-			InstallChoco()
+
 		}
 	} else {
 		if string(item) == "done" {
