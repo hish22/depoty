@@ -1,6 +1,6 @@
 # Depoty
 
-![MIT License](https://img.shields.io/badge/license-MIT-green)
+![Apache License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 <p align="center">
 <img src="assets/logo/depotyLogo_V1.png" alt="logo">
