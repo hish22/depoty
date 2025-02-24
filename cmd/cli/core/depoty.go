@@ -8,13 +8,27 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
+	"golang.org/x/sys/windows"
 )
+
+func checkProcessPrivileges() bool {
+	Token := windows.GetCurrentProcessToken()
+
+	return Token.IsElevated()
+}
 
 var RootCommand = &cobra.Command{
 	Use:   "depoty",
 	Short: "Root command for managing Depoty.",
-	Long:  "Depoty is an advanced extension of package managers, offering enhanced local management features for package handling and control.",
+	Long:  "Depoty is an extension to Chocolatey package manager, offering enhanced local management features for package handling and control.",
 	Run: func(cmd *cobra.Command, args []string) {
+
+		// Check if user started the process with privileges or not.
+		if !checkProcessPrivileges() {
+			panic("Please run the application with administrator privileges," +
+				" as Chocolatey requires elevated permissions to perform installations and other tasks.")
+		}
+
 		// Open badger
 		dbConfig := badgers.MainDb("/tmp/badger/config")
 
