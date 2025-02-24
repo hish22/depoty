@@ -2,7 +2,6 @@ package test
 
 import (
 	"depoty/cmd/cli/core"
-	"depoty/internal/listing"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -13,7 +12,6 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			listing.ListPkgs() // -> Tested , and it is working well !
 			fmt.Println("This command is just for testing purposes.")
 		},
 	}
