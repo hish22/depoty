@@ -35,7 +35,7 @@ var RootCommand = &cobra.Command{
 		fmt.Println("Checking Initialization Values..")
 		// Check if init process is done
 		if _, err := badgers.Read(dbConfig, []byte("initDone")); err != nil {
-			log.Fatal("Please Start the Configuration process before using the TUI, type > Depoty init")
+			log.Fatal("Please Start the Configuration process before using the TUI, type > depoty init")
 		}
 
 		dbConfig.Close()

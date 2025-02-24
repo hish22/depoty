@@ -3,12 +3,11 @@ package initalization
 import (
 	"bufio"
 	"bytes"
+	"depoty/internal/util/scripts"
 	"errors"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
-	"path"
 )
 
 func InstallChoco() {
@@ -27,19 +26,25 @@ func InstallChoco() {
 
 func checkChoco() (string, error) {
 
-	versionScript := getScript("checkChocoVersion.ps1")
-
-	CheckVersion := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-File", versionScript)
+	CheckVersion := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scripts.CheckVersionScript)
 
 	var stderr, stdout bytes.Buffer
 
 	CheckVersion.Stdout = &stdout
 	CheckVersion.Stderr = &stderr
 
-	err := CheckVersion.Run()
+	err := CheckVersion.Start()
 
 	if err != nil {
+		fmt.Println(err)
 		log.Fatal("Unpredictable behavior happens while executing version command!")
+	}
+
+	err = CheckVersion.Wait()
+
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal("Unpredictable behavior happens while waiting the version command!")
 	}
 
 	if len(stderr.Bytes()) != 0 {
@@ -50,21 +55,9 @@ func checkChoco() (string, error) {
 
 }
 
-func getScript(scriptName string) string {
-	mainDir, err := os.Getwd()
-
-	if err != nil {
-		log.Fatal("Unpredictable behavior happens while fetching path!")
-	}
-
-	return path.Join(mainDir, `internal\util\scripts\`+scriptName)
-}
-
 func installationProcess() {
 
-	installationScript := getScript(`installChoco.ps1`)
-
-	startInstalling := exec.Command("powershell", "-Command", "Start-Process", "powershell", "-ArgumentList", fmt.Sprintf(`"-ExecutionPolicy Bypass -File %s"`, installationScript), "-Verb", "runAs")
+	startInstalling := exec.Command("powershell", "-Command", "Start-Process", "powershell", "-ArgumentList", fmt.Sprintf(`"-ExecutionPolicy Bypass -Command %s"`, scripts.InstallChocoScript), "-Verb", "runAs")
 
 	outputOfInstallation, err := startInstalling.StdoutPipe()
 
