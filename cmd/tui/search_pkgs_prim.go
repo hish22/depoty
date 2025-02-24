@@ -15,9 +15,6 @@ func searchPkgs() (*tview.Flex, *tview.InputField, *tview.TextView) {
 
 	searchPkg.SetFieldTextColor(tcell.ColorBlack)
 
-	// searchPkg.SetPlaceholder("Package name").
-	// 	SetPlaceholderTextColor(tcell.ColorBlack).
-
 	searchPkg.Autocomplete()
 
 	// Searching text

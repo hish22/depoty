@@ -19,7 +19,7 @@ func checkProcessPrivileges() bool {
 
 var RootCommand = &cobra.Command{
 	Use:   "depoty",
-	Short: "Root command for managing Depoty.",
+	Short: "Root command to start the TUI app.",
 	Long:  "Depoty is an extension to Chocolatey package manager, offering enhanced local management features for package handling and control.",
 	Run: func(cmd *cobra.Command, args []string) {
 
