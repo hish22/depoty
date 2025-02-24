@@ -25,6 +25,8 @@ func EntryPoint() {
 
 			badgers.Insert(db, []byte("initDone"), []byte("done"))
 
+			fmt.Println("The initialization process finished successfully.")
+
 		}
 	} else {
 		if string(item) == "done" {
