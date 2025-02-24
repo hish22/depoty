@@ -94,6 +94,12 @@ If you want to clear the cache of the system type:
 depoty clear
 ```
 
+To Display depoty commands, type:
+
+```bash
+depoty -h
+```
+
 which will clear the cache of the outdated packages and the configuration information.
 
 > [!NOTE]
