@@ -41,7 +41,7 @@ func TuiStart() {
 	fetchFoundPkgs(app, pkgInfo, foundPkgsTable)
 
 	// Start searching by pressing Enter.
-	performSearchingOperation(installPkg, foundPkgsTable)
+	performSearchingOperation(app, installPkg, foundPkgsTable, textPkgs)
 
 	// Dynamic package name showing
 	dynamicSearchingText(foundPkgsTable, textPkgs)
@@ -127,7 +127,17 @@ func TuiStart() {
 
 		// Set the focus to the program
 		if event.Key() == tcell.KeyEsc {
-			app.SetRoot(rowFlex, true).SetFocus(packageTable)
+			// get the app main focus
+			focus := app.GetFocus()
+
+			// Make the focues to the whole search flex / the package table if focus was on guide frame
+			if focus == installPkg {
+				focus = SearchFlex
+			} else {
+				focus = packageTable
+			}
+			// Reset the app root and focus to the main row flex
+			app.SetRoot(rowFlex, true).SetFocus(focus)
 		}
 
 		// Change searching to blank
@@ -138,8 +148,7 @@ func TuiStart() {
 		// Refresh the installed packages
 		if event.Key() == tcell.KeyCtrlR {
 			packageTable.Clear()
-			Contentlist, listOfPkgsToSearch := RefreshWholePkgs(packageTable)
-			listOfPkgs = listOfPkgsToSearch
+			Contentlist := RefreshWholePkgs(packageTable, &listOfPkgs)
 			for i, content := range Contentlist {
 				packageTable.SetCell(i, 0, tview.NewTableCell(content))
 			}

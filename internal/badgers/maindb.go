@@ -8,8 +8,10 @@ import (
 )
 
 func MainDb(location string) *badger.DB {
-	opts := badger.DefaultOptions(location) // "/tmp/badger"
-	// opts.Logger = nil
+	// We open defalut badger with Caching.
+	opts := badger.DefaultOptions(location)
+	// Empty the default badger logger for production.
+	opts.Logger = nil
 	db, err := badger.Open(opts)
 
 	if err != nil {
@@ -64,10 +66,6 @@ func Read(db *badger.DB, key []byte) ([]byte, error) {
 		return err
 
 	})
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 
 	return value, err
 

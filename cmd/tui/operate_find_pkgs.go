@@ -37,7 +37,7 @@ func operateFindingPkgs(installPkg *tview.InputField, PkgsTable *tview.Table) {
 		}
 
 		// Get rid of unwanted choco ads (Check this)
-		if strings.Contains(pkgs[len(pkgs)-3], "Learn more") && i == len(pkgs)-3 {
+		if strings.Contains(pkgs[len(pkgs)-3], "Learn more") && i == len(pkgs)-5 {
 			PkgsTable.SetTitle(pkgs[i-3])
 			PkgsTable.SetBorderColor(tcell.ColorGreen)
 			break

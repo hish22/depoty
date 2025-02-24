@@ -7,8 +7,10 @@ import (
 	"github.com/rivo/tview"
 )
 
-func RefreshWholePkgs(packageTable *tview.Table) ([]string, map[string]string) {
-	list := make(map[string]string)
+func RefreshWholePkgs(packageTable *tview.Table, listOfPkgs *map[string]string) []string {
+	for k := range *listOfPkgs {
+		delete(*listOfPkgs, k)
+	}
 
 	outLit := make([]string, 0)
 
@@ -29,11 +31,11 @@ func RefreshWholePkgs(packageTable *tview.Table) ([]string, map[string]string) {
 	// Create the packageTable
 	for i := 0; i < len(pkgs); i += 3 {
 		outLit = append(outLit, pkgs[i])
-		list[strings.Split(pkgs[i], " ")[0]] = pkgs[i]
+		(*listOfPkgs)[strings.Split(pkgs[i], " ")[0]] = pkgs[i]
 		j++
 	}
 
-	return outLit, list
+	return outLit
 }
 
 func ListWholePkgs(packageTable *tview.Table) map[string]string {

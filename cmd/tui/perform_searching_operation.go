@@ -5,7 +5,7 @@ import (
 	"github.com/rivo/tview"
 )
 
-func performSearchingOperation(installPkg *tview.InputField, foundPkgsTable *tview.Table) {
+func performSearchingOperation(app *tview.Application, installPkg *tview.InputField, foundPkgsTable *tview.Table, textPkg *tview.TextView) {
 	// Start searching by pressing Enter
 	installPkg.SetDoneFunc(func(key tcell.Key) {
 
