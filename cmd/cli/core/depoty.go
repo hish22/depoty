@@ -34,6 +34,8 @@ var RootCommand = &cobra.Command{
 		fmt.Println("Fetching Packages list...")
 
 		// Start the TUI app
+		fmt.Println("Starting Depoty..")
+
 		tui.TuiStart()
 
 	},
