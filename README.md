@@ -100,7 +100,7 @@ Other functions:
 
 ## Additional
 
-If you want to clear the cache of the system type:
+If you want to clear the cache of the system, type:
 
 ```bash
 depoty clear
