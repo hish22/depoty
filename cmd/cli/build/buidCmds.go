@@ -1,6 +1,7 @@
 package build
 
 import (
+	"depoty/cmd/cli/cache"
 	"depoty/cmd/cli/core"
 	"depoty/cmd/cli/initd"
 	"depoty/cmd/cli/test"
@@ -13,8 +14,11 @@ func CreateCommands() {
 	// Init the "init" command.
 	initd.MainInitCommand()
 
-	//Test commands
+	// Test commands
 	test.TestCommand()
+
+	// Clear Cache command
+	cache.ClearCahce()
 
 	// Executing the main Command
 	// Error check regarding the root command
