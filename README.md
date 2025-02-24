@@ -1,7 +1,8 @@
 # Depoty
 
 ![Apache License](https://img.shields.io/badge/license-Apache%202.0-blue)
-![Release](https://github.com/hish22/depoty/releases/tag/v1.0.0)
+![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
+)
 
 <p align="center">
 <img src="assets/logo/depotyLogo_V1.png" alt="logo">
@@ -33,6 +34,18 @@ Depoty can be installed using the following methods:
 ### Method 1: Manual Download
 
 - Download the binary from the <a href="https://github.com/hish22/depoty/releases">Releases</a> page.
+
+Next, initialize the environment variable for the path by adding the repository app path, or alternatively, execute the following PowerShell script.
+
+```powershell
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+$exeDir = "C:\path\to\depoty\"
+$newPath = "$exeDir;" + $currentPath
+[Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+```
+
+> [!NOTE]
+> Replace $exeDir with the path where depoty.exe is located.
 
 ### Method 2: Install via Chocolatey
 
