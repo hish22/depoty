@@ -2,7 +2,9 @@
 
 ![MIT License](https://img.shields.io/badge/license-MIT-green)
 
-![Alt text](assets/logo/depotyLogo_V1.png)
+<p align="center">
+<img src="assets/logo/depotyLogo_V1.png" alt="logo">
+</p>
 
 ## Description
 
