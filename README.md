@@ -2,7 +2,6 @@
 
 ![Apache License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
-)
 
 <p align="center">
 <img src="assets/logo/depotyLogo_V1.png" alt="logo">
