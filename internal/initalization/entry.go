@@ -19,16 +19,16 @@ func EntryPoint() {
 	InstallChoco()
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("The configuration process is not initialized yet.")
 		if err == badgerdb.ErrKeyNotFound {
-			fmt.Println("Starting Initalization Process")
+			fmt.Println("Starting Initalization Process..")
 
 			badgers.Insert(db, []byte("initDone"), []byte("done"))
 
 		}
 	} else {
 		if string(item) == "done" {
-			fmt.Println("Initalization Process is already done")
+			fmt.Println("Initalization Process is already done.")
 		}
 
 	}
