@@ -41,7 +41,7 @@ func TuiStart() {
 	fetchFoundPkgs(app, pkgInfo, foundPkgsTable)
 
 	// Start searching by pressing Enter.
-	performSearchingOperation(installPkg, foundPkgsTable, textPkgs)
+	performSearchingOperation(installPkg, foundPkgsTable)
 
 	// Dynamic package name showing
 	dynamicSearchingText(foundPkgsTable, textPkgs)
