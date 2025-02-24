@@ -93,6 +93,7 @@ Additional functions:
 
 - Navigation Button `TAB`
 - Return to main veiwport `ESC`
+- Refresh the installed packages `CTRL + R`
 
 Other functions:
 
