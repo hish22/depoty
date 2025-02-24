@@ -2,7 +2,7 @@ package test
 
 import (
 	"depoty/cmd/cli/core"
-	"depoty/internal/deletion"
+	"depoty/internal/updation"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -13,8 +13,7 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			var pkgs []string = []string{"php", "notion"}
-			deletion.DropAllPkgs(pkgs) // -> Tested , and it is working well !
+			updation.UpdatePkg("slack") // -> Tested , and it is working well !
 			fmt.Println("This command is just for testing purposes.")
 		},
 	}
