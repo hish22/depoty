@@ -1,7 +1,7 @@
 # Depoty
 
 ![Apache License](https://img.shields.io/badge/license-Apache%202.0-blue)
-![Release](https://img.shields.io/github/v/release/your-username/your-repo)
+![Release](https://github.com/hish22/depoty/releases/tag/v1.0.0)
 
 <p align="center">
 <img src="assets/logo/depotyLogo_V1.png" alt="logo">
