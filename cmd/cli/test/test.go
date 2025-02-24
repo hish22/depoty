@@ -13,7 +13,7 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			finding.FindPkg("slack") // -> Tested , and it is working well !
+			finding.FindPkgInfo("slack") // -> Tested , and it is working well !
 			fmt.Println("This command is just for testing purposes.")
 		},
 	}
