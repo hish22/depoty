@@ -13,7 +13,8 @@ func TestCommand() {
 		Use:   "test",
 		Short: "testing",
 		Run: func(cmd *cobra.Command, args []string) {
-			deletion.DeletePkg("php") // -> Tested , and it is working well !
+			var pkgs []string = []string{"php", "notion"}
+			deletion.DropAllPkgs(pkgs) // -> Tested , and it is working well !
 			fmt.Println("This command is just for testing purposes.")
 		},
 	}
