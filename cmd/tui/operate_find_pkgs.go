@@ -28,12 +28,18 @@ func operateFindingPkgs(installPkg *tview.InputField, PkgsTable *tview.Table) {
 
 	for i := 1; i < len(pkgs); i++ {
 
-		if len(pkgs) == 4 || len(pkgs) == 8 {
-			if strings.Contains(pkgs[2], "0 packages found.") {
-				PkgsTable.SetBorderColor(tcell.ColorRed)
-				PkgsTable.SetTitle(pkgs[2])
-				break
-			}
+		// Check if there is no package found, then show 0 packages found. (Without Admin terminal)
+		if strings.Contains(pkgs[1], "0 packages found.") {
+			PkgsTable.SetBorderColor(tcell.ColorRed)
+			PkgsTable.SetTitle(pkgs[1])
+			break
+		}
+		// Check if there is no package found, then show 0 packages found. (With Admin terminal)
+
+		if strings.Contains(pkgs[2], "0 packages found.") {
+			PkgsTable.SetBorderColor(tcell.ColorRed)
+			PkgsTable.SetTitle(pkgs[2])
+			break
 		}
 
 		// Get rid of unwanted choco ads (Check this)
