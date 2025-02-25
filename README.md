@@ -92,7 +92,7 @@ Additional functions:
 - Drop/Delete all installed packages `F9`
 
 > [!WARNING]
-> Version 1.0.0 of Depoty will automatically uninstall Depoty if it was installed via Chocolatey.
+> Version 1.0.0 of Depoty will automatically uninstall Depoty if it was installed via Chocolatey and Drop all command used.
 
 - Navigation Button `TAB`
 - Return to main veiwport `ESC`
