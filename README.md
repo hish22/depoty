@@ -50,6 +50,9 @@ $newPath = "$exeDir;" + $currentPath
 
 Alternatively, If you have Chocolatey installed, you can install Depoty by running the following command:
 
+> [!NOTE]
+> Integration with Chocolatey for installation is currently in progress, pending completion by the Chocolatey team.
+
 ```bash
 choco install depoty
 ```
