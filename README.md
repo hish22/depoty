@@ -121,6 +121,6 @@ which will clear the cache of the outdated packages and the configuration inform
 > [!NOTE]
 > If you decide to uninstall the app "sadly", make sure to clear the cache beforehand.
 
-## Contributing
+<!-- ## Contributing
 
-Feel free to fork and submit pull requests. Please refer to the contribution guidelines.
+Feel free to fork and submit pull requests. Please refer to the contribution guidelines. -->
