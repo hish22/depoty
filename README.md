@@ -61,6 +61,9 @@ choco install depoty
 
 ## 📝 Usage
 
+> [!IMPORTANT]
+> Depoty should be used in a terminal with administrator privileges (Run as Administrator) to ensure proper functionality.
+
 Once installed, follow these steps to use Depoty:
 
 1. Initialization: Run the following command to start the initialization process:
