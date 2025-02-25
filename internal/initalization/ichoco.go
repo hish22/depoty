@@ -19,7 +19,7 @@ func InstallChoco() {
 		installationProcess()
 
 	} else {
-		fmt.Printf("Choco is found, and its version is %v", chocoVersion)
+		fmt.Printf("Choco is found, and its version is %v \n", chocoVersion)
 	}
 
 }
@@ -36,15 +36,15 @@ func checkChoco() (string, error) {
 	err := CheckVersion.Start()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while executing version command!")
+		fmt.Printf("Error executing command: %v\nOutput: %s\n", err, "choco --version")
+		return "", err
 	}
 
 	err = CheckVersion.Wait()
 
 	if err != nil {
-		fmt.Println(err)
-		log.Fatal("Unpredictable behavior happens while waiting the version command!")
+		fmt.Printf("Error executing command: %v\nOutput: %s\n", err, "choco --version")
+		return "", err
 	}
 
 	if len(stderr.Bytes()) != 0 {
@@ -57,7 +57,8 @@ func checkChoco() (string, error) {
 
 func installationProcess() {
 
-	startInstalling := exec.Command("powershell", "-Command", "Start-Process", "powershell", "-ArgumentList", fmt.Sprintf(`"-ExecutionPolicy Bypass -Command %s"`, scripts.InstallChocoScript), "-Verb", "runAs")
+	// startInstalling := exec.Command("powershell", "-Command", "Start-Process", "powershell", "-ArgumentList", fmt.Sprintf(`"-ExecutionPolicy Bypass -Command %s"`, scripts.InstallChocoScript), "-Verb", "runAs")
+	startInstalling := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scripts.InstallChocoScript)
 
 	outputOfInstallation, err := startInstalling.StdoutPipe()
 

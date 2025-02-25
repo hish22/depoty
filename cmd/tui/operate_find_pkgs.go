@@ -26,7 +26,7 @@ func operateFindingPkgs(installPkg *tview.InputField, PkgsTable *tview.Table) {
 
 	j := 0
 
-	for i := 2; i < len(pkgs); i++ {
+	for i := 1; i < len(pkgs); i++ {
 
 		if len(pkgs) == 4 || len(pkgs) == 8 {
 			if strings.Contains(pkgs[2], "0 packages found.") {

@@ -4,13 +4,13 @@
       "Major": 1,
       "Minor": 0,
       "Patch": 0,
-      "Build": 0
+      "Build": 1
     },
     "ProductVersion": {
       "Major": 1,
       "Minor": 0,
       "Patch": 0,
-      "Build": 0
+      "Build": 1
     },
     "FileFlagsMask": "3f",
     "FileFlags": "",
@@ -21,12 +21,12 @@
   "StringFileInfo": {
     "CompanyName": "pling",
     "FileDescription": "depoty",
-    "FileVersion": "1.0.0",
+    "FileVersion": "1.0.2",
     "InternalName": "depoty.exe",
     "LegalCopyright": "© 2025 hisham (pling)",
     "OriginalFilename": "depoty.exe",
     "ProductName": "depoty",
-    "ProductVersion": "1.0.0"
+    "ProductVersion": "1.0.2"
   },
   "VarFileInfo": {
     "Translation": {
