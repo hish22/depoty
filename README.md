@@ -1,4 +1,4 @@
-# Depoty
+# 🚀 Depoty
 
 ![Apache License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
@@ -23,7 +23,7 @@ In addition to its core functionality, Depoty extends **Chocolatey** with additi
 <img src="assets/Images/depoty_found_pkgs.png" alt="logo">
 </p>
 
-## Installation
+## 🔧 Installation
 
 Depoty can be installed using the following methods:
 
@@ -57,7 +57,7 @@ Alternatively, If you have Chocolatey installed, you can install Depoty by runni
 choco install depoty
 ```
 
-## Usage
+## 📝 Usage
 
 Once installed, follow these steps to use Depoty:
 
@@ -79,7 +79,7 @@ depoty
 <img src="assets/Images/depoty_showcase.png" alt="logo">
 </p>
 
-## Key Functions
+## 📌 Key Functions
 
 - Install a package by pressing `CTRL + D`
 - Delete a package by pressing `CTRL + Q`
@@ -127,3 +127,7 @@ which will clear the cache of the outdated packages and the configuration inform
 <!-- ## Contributing
 
 Feel free to fork and submit pull requests. Please refer to the contribution guidelines. -->
+
+## 📢 Reporting Issues
+
+If you encounter any problems, bugs, or have feature requests, feel free to open an issue!
