@@ -84,7 +84,7 @@ depoty
 - Install a package by pressing `CTRL + D`
 - Delete a package by pressing `CTRL + Q`
 - Update a package by pressing `CTRL + U`
-- Fetching package Information `Enter`
+- Fetching package Information + Searching specific packages `Enter`
 - Searching a specific package `CTRL + S`
 
 Additional functions:
