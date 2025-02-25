@@ -37,7 +37,7 @@ Depoty can be installed using the following methods:
 Next, initialize the environment variable for the path by adding the repository app path, or alternatively, execute the following PowerShell script.
 
 > [!NOTE]
-> Replace $exeDir with the path where depoty.exe is located.
+> Replace "C:\path\to\depoty\" with the path where depoty.exe is located.
 
 ```powershell
 $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
