@@ -3,7 +3,6 @@ package listing
 import (
 	"depoty/internal/badgers"
 	"depoty/internal/util/common"
-	"regexp"
 	"strings"
 )
 
@@ -15,31 +14,28 @@ func ListPkgs() []string {
 	// Close DB
 	defer db.Close()
 
-	// List All packages
-	text := common.ExecuteScript("choco list", "")
+	// perform list "choco list -r" to list packages.
+	text := common.ExecuteScript("choco list -r", "")
 
-	// Slice the listed packages
-	var textSlice []string = make([]string, 0, 100)
+	// seperate packages by new line.
+	listSlice := strings.Split(text, "\n")
+	// Final slice.
+	listSliceSep := make([]string, 0, 100)
 
-	// Match the regular expression
-	re := regexp.MustCompile(`(\S+)\s+([\d.]+)`)
-	match := re.FindAllStringSubmatch(text, -1)
-
-	// Passing the list to textSlice
-	for _, item := range match {
-		textSlice = append(textSlice, item...)
-	}
-	// checking the list if it has outdated packages
-	for i, item := range textSlice {
+	// checking the list if it has outdated packages.
+	for i, item := range listSlice {
+		// seperate packages name and version by space: (nmap|1.1.1) -> (nmap 1.1.1).
 		pkgName := strings.Split(item, " ")[0]
-
+		// add the seperated value to the slice.
+		listSliceSep = append(listSliceSep, strings.Replace(item, "|", " ", 1))
+		// Check if there a outdated package.
 		_, err := badgers.Read(db, []byte(pkgName))
-
+		// If found outdated package, then add outdated tag.
 		if err == nil {
-			textSlice[i] += " (outdated)"
+			listSliceSep[i] += " (outdated)"
 		}
 
 	}
 
-	return textSlice
+	return listSliceSep
 }
