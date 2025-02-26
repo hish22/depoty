@@ -18,5 +18,11 @@ func UpdatePkg(pkgName string) bool {
 		badgers.Delete(db, []byte(pkgName))
 	}
 
-	return common.ExecutePrevScript("choco upgrade", pkgName+" -y")
+	success, err := common.ExecutePrevScript("choco upgrade", pkgName+" -y")
+
+	if err != nil {
+		return false
+	}
+
+	return success
 }

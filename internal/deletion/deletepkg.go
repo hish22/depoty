@@ -18,5 +18,11 @@ func DeletePkg(pkgName string) bool {
 		badgers.Delete(db, []byte(pkgName))
 	}
 
-	return common.ExecutePrevScript("choco uninstall", pkgName+" -y")
+	success, err := common.ExecutePrevScript("choco uninstall", pkgName+" -y")
+
+	if err != nil {
+		return false
+	}
+
+	return success
 }

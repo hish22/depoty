@@ -66,19 +66,19 @@ func TuiStart() {
 		AddItem(guideFrame, 0, 2, false)
 
 	// Create Confirmation box & Handle the installation process
-	InstallConfModal := OperationOnPackage("Are you sure you want to install this package?", installation.InstallPkg, app, foundPkgsTable, rowFlex)
+	InstallConfModal := OperationOnPackage("Are you sure you want to install this package?", installation.InstallPkg, app, foundPkgsTable, rowFlex, "Package successfully installed", "Package installation failed")
 
 	// Handle the installation button & press (To Trigger the process of installation)
 	TriggerInstallProcess(tcell.KeyCtrlD, app, foundPkgsTable, InstallConfModal)
 
 	// Create Confirmation box & Handle the updation process
-	UpdateconfModal := OperationOnPackage("Are you sure you want to Update this package?", updation.UpdatePkg, app, packageTable, rowFlex)
+	UpdateconfModal := OperationOnPackage("Are you sure you want to Update this package?", updation.UpdatePkg, app, packageTable, rowFlex, "Package successfully updated", "Package update failed")
 
 	// Create Confirmation box & Handle the Deletion process
-	DeleteconfModal := OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex)
+	DeleteconfModal := OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex, "Package successfully deleted", "Package deletion failed")
 
 	// Create Confirmation box & Handle the drop packages process
-	DropconfModal := DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex)
+	DropconfModal := DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex, "Packages successfully dropped", "Failed to drop packages")
 
 	// Slice of keys
 	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF9}

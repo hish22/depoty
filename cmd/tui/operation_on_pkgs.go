@@ -1,12 +1,13 @@
 package tui
 
 import (
+	"depoty/cmd/tui/messages"
 	"strings"
 
 	"github.com/rivo/tview"
 )
 
-func OperationOnPackage(msg string, callback func(string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex) *tview.Modal {
+func OperationOnPackage(msg string, callback func(string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex, sucessMsg string, errMsg string) *tview.Modal {
 	// Create Confimation box & Handle the installation process
 	return tview.NewModal().
 		SetText(msg). // "Are you sure you want to install this package?"
@@ -29,9 +30,13 @@ func OperationOnPackage(msg string, callback func(string) bool, app *tview.Appli
 					// Update the Installed Packages list
 					// ListWholePkgs(packageTable)
 					// Update the view
-					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
+					// Success modal message.
+					successModal := messages.MessageModal(app, tview.NewModal(), rowFlex, sucessMsg, "Success message")
+					app.SetRoot(successModal, true).SetFocus(successModal)
 				} else {
-					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
+					// Error modal message.
+					errorModal := messages.MessageModal(app, tview.NewModal(), rowFlex, errMsg, "Error message")
+					app.SetRoot(errorModal, true).SetFocus(errorModal)
 				}
 
 			} else {
@@ -40,7 +45,7 @@ func OperationOnPackage(msg string, callback func(string) bool, app *tview.Appli
 		})
 }
 
-func DropAllPkgsOperation(msg string, callback func([]string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex) *tview.Modal {
+func DropAllPkgsOperation(msg string, callback func([]string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex, sucessMsg string, errMsg string) *tview.Modal {
 	// Create Confimation box & Handle the installation process
 	return tview.NewModal().
 		SetText(msg). // "ex: Are you sure you want to install this package?"
@@ -68,9 +73,13 @@ func DropAllPkgsOperation(msg string, callback func([]string) bool, app *tview.A
 					// Update the Installed Packages list
 					// ListWholePkgs(packageTable)
 					// Update the view
-					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
+					// Success modal message.
+					successModal := messages.MessageModal(app, tview.NewModal(), rowFlex, sucessMsg, "Success message")
+					app.SetRoot(successModal, true).SetFocus(successModal)
 				} else {
-					app.SetRoot(rowFlex, true).SetFocus(PkgsTable)
+					// Error modal message.
+					errorModal := messages.MessageModal(app, tview.NewModal(), rowFlex, errMsg, "Error message")
+					app.SetRoot(errorModal, true).SetFocus(errorModal)
 				}
 
 			} else {
