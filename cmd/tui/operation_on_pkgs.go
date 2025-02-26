@@ -59,7 +59,7 @@ func DropAllPkgsOperation(msg string, callback func([]string) bool, app *tview.A
 				for i := 0; i < PkgsTable.GetRowCount(); i++ {
 					pkgRow := PkgsTable.GetCell(i, 0)
 					splitBySpace := strings.Split(pkgRow.Text, " ")
-					if !strings.Contains(splitBySpace[0], "chocolatey") || !strings.Contains(strings.ToLower(splitBySpace[0]), "depoty") {
+					if splitBySpace[0] != "chocolatey" || strings.ToLower(splitBySpace[0]) != "depoty" {
 						PkgSlice = append(PkgSlice, splitBySpace[0])
 					}
 				}
