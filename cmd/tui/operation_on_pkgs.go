@@ -49,18 +49,19 @@ func DropAllPkgsOperation(msg string, callback func([]string) bool, app *tview.A
 			if buttonLabel == "Yes" {
 				// Create Packges slice
 				var PkgSlice []string
-
+				// Start inserting packages into the slice to be deleted,
+				// If the package contian chocolatey or depoty, then don't delete it.
 				for i := 0; i < PkgsTable.GetRowCount(); i++ {
 					pkgRow := PkgsTable.GetCell(i, 0)
 					splitBySpace := strings.Split(pkgRow.Text, " ")
-					if !strings.Contains(splitBySpace[0], "chocolatey") {
+					if !strings.Contains(splitBySpace[0], "chocolatey") || !strings.Contains(strings.ToLower(splitBySpace[0]), "depoty") {
 						PkgSlice = append(PkgSlice, splitBySpace[0])
 					}
 				}
 				// Drop All package
 				var success bool
 				app.Suspend(func() {
-					success = callback(PkgSlice) // ex: installation.InstallPkg(pkgRowSlice[0])
+					success = callback(PkgSlice) // ex: deletion.DropAllPkgs(pkgRowSlice)
 				})
 
 				if success {
