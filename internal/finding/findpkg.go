@@ -6,7 +6,7 @@ import (
 )
 
 func FindPkg(pkgName string) []string {
-	text := common.ExecuteScript("choco find", pkgName)
+	text := common.ExecuteScript("choco find -r", pkgName)
 
 	textSlice := strings.Split(text, "\n")
 

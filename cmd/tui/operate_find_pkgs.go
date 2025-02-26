@@ -2,6 +2,7 @@ package tui
 
 import (
 	"depoty/internal/finding"
+	"strconv"
 	"strings"
 
 	"github.com/gdamore/tcell/v2"
@@ -22,40 +23,31 @@ func operateFindingPkgs(installPkg *tview.InputField, PkgsTable *tview.Table) {
 
 	pkgs := <-pkgChan
 
-	// pkgs := finding.FindPkg(installPkg.GetText())
+	// Check if no packages found, else start iterating through these packages
+	if len(pkgs)-1 == 0 {
+		PkgsTable.SetBorderColor(tcell.ColorRed)
+		PkgsTable.SetTitle("0 packages found.")
+	} else {
+		j := 0
+		// Total number of packages in string type
+		numberOfPkgs := strconv.Itoa(len(pkgs) - 1)
 
-	j := 0
+		// Set the border green color since we found packges to list
+		PkgsTable.SetBorderColor(tcell.ColorGreen)
+		PkgsTable.SetTitle(numberOfPkgs + " packages found.")
+		for i := 0; i < len(pkgs); i++ {
 
-	for i := 1; i < len(pkgs); i++ {
+			// Replace the | with space " "
+			finalPkg := strings.Replace(pkgs[i], "|", " ", 1)
 
-		// Check if there is no package found, then show 0 packages found. (Without Admin terminal)
-		if strings.Contains(pkgs[1], "0 packages found.") {
-			PkgsTable.SetBorderColor(tcell.ColorRed)
-			PkgsTable.SetTitle(pkgs[1])
-			break
-		}
-		// Check if there is no package found, then show 0 packages found. (With Admin terminal)
-
-		if strings.Contains(pkgs[2], "0 packages found.") {
-			PkgsTable.SetBorderColor(tcell.ColorRed)
-			PkgsTable.SetTitle(pkgs[2])
-			break
-		}
-
-		// Get rid of unwanted choco ads (Check this)
-		if strings.Contains(pkgs[len(pkgs)-3], "Learn more") && i == len(pkgs)-5 {
-			PkgsTable.SetTitle(pkgs[i-3])
-			PkgsTable.SetBorderColor(tcell.ColorGreen)
-			break
-		} else {
-			if len(pkgs)-2 == i {
-				PkgsTable.SetTitle(pkgs[i])
-				PkgsTable.SetBorderColor(tcell.ColorGreen)
+			// break if we reached the last element
+			if len(pkgs)-1 == i {
 				break
 			}
+			// Populate the table with found packages
+			PkgsTable.SetCell(j, 0, tview.NewTableCell(finalPkg))
+			j++
 		}
-
-		PkgsTable.SetCell(j, 0, tview.NewTableCell(pkgs[i]))
-		j++
 	}
+
 }
