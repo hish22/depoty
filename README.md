@@ -118,13 +118,13 @@ If you want to clear the cache of the system, type:
 depoty clear
 ```
 
+which will clear the cache of the outdated packages and the configuration information.
+
 To Display depoty commands, type:
 
 ```bash
 depoty -h
 ```
-
-which will clear the cache of the outdated packages and the configuration information.
 
 > [!NOTE]
 > If you decide to uninstall the app "sadly", make sure to clear the cache beforehand.
