@@ -5,10 +5,13 @@ import (
 	"depoty/internal/util/common"
 )
 
-func UpdatePkg(pkgName string) bool {
+func UpdatePkg(pkg []string) bool {
 
 	// Open Badger
 	db := badgers.MainDb("/tmp/badger/outdate")
+
+	// Get the package name
+	pkgName := pkg[0]
 
 	// Close badger
 	defer db.Close()

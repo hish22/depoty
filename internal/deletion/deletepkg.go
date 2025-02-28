@@ -5,10 +5,13 @@ import (
 	"depoty/internal/util/common"
 )
 
-func DeletePkg(pkgName string) bool {
+func DeletePkg(pkg []string) bool {
 
 	// Open Badger
 	db := badgers.MainDb("/tmp/badger/outdate")
+
+	// Get the package name
+	pkgName := pkg[0]
 
 	// Close Badger
 	defer db.Close()

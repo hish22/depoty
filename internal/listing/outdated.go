@@ -3,7 +3,6 @@ package listing
 import (
 	"depoty/internal/badgers"
 	"depoty/internal/util/common"
-	"fmt"
 	"strings"
 )
 
@@ -23,7 +22,6 @@ func OutdatedList() {
 	// Split by (|) , then save to badger
 	for i := 0; i < len(outdatedByLine)-1; i++ {
 		pkgName := strings.Split(outdatedByLine[i], "|")[0]
-		fmt.Println(pkgName)
 		// Check If the value doesn't exsist.
 		value, err := badgers.Read(db, []byte(pkgName))
 		// Add the package to the db if it is outdated.

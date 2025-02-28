@@ -1,9 +1,11 @@
 package deletion
 
-func DropAllPkgs(pkgNames []string) bool {
+func DropAllPkgs(pkg []string) bool {
 	var success bool
-	for _, pkg := range pkgNames {
+	i := 0
+	for i < len(pkg) {
 		success = DeletePkg(pkg)
+		i++
 	}
 	return success
 }
