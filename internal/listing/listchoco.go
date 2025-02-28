@@ -25,10 +25,10 @@ func ListPkgs() []string {
 	// checking the list if it has outdated packages.
 	for i, item := range listSlice {
 		// seperate packages name and version by space: (nmap|1.1.1) -> (nmap 1.1.1).
-		pkgName := strings.Split(item, " ")[0]
+		pkgName := strings.Split(item, "|")[0]
 		// add the seperated value to the slice.
 		listSliceSep = append(listSliceSep, strings.Replace(item, "|", " ", 1))
-		// Check if there a outdated package.
+		// Check if there are some outdated packages.
 		_, err := badgers.Read(db, []byte(pkgName))
 		// If found outdated package, then add outdated tag.
 		if err == nil {

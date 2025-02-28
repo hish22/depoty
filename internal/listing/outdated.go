@@ -15,22 +15,21 @@ func OutdatedList() {
 	defer db.Close()
 
 	// List Outdated packges
-	outdatedPackages := common.ExecuteScript("choco outdated", "")
+	outdatedPackages := common.ExecuteScript("choco outdated -r", "")
 
 	// Split by Lines
 	outdatedByLine := strings.Split(outdatedPackages, "\n")
 
 	// Split by (|) , then save to badger
-	for i := 4; i < len(outdatedByLine); i++ {
-		splitVersionAndName := strings.Split(outdatedByLine[i], "|")
-
-		if i != len(outdatedByLine)-2 && splitVersionAndName[0] != "" {
-			value, err := badgers.Read(db, []byte(splitVersionAndName[0]))
-			fmt.Println(string(value))
-			if err != nil {
-				item := []byte(splitVersionAndName[0])
-				badgers.Insert(db, item, item)
-			}
+	for i := 0; i < len(outdatedByLine)-1; i++ {
+		pkgName := strings.Split(outdatedByLine[i], "|")[0]
+		fmt.Println(pkgName)
+		// Check If the value doesn't exsist.
+		value, err := badgers.Read(db, []byte(pkgName))
+		// Add the package to the db if it is outdated.
+		if err != nil {
+			item := []byte(pkgName)
+			badgers.Insert(db, item, value)
 		}
 
 	}
