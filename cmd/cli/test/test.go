@@ -10,9 +10,9 @@ import (
 func TestCommand() {
 	var TestCommand = &cobra.Command{
 		Use:   "test",
-		Short: "testing",
+		Short: "Testing.",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("This command is just for testing purposes.")
+			fmt.Println("This is testing command!")
 		},
 	}
 	core.RootCommand.AddCommand(TestCommand)

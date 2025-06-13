@@ -14,8 +14,8 @@ func ClearCahce() {
 		Use:   "clear",
 		Short: "Clear the system cache",
 		Run: func(cmd *cobra.Command, args []string) {
-			db1 := badgers.MainDb("/tmp/badger/outdate")
-			db2 := badgers.MainDb("/tmp/badger/config")
+			db1 := badgers.MainDb("/tmp/choco/outdate")
+			db2 := badgers.MainDb("/system/choco/config")
 
 			fmt.Println("Clearing Cache..")
 

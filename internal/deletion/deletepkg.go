@@ -8,7 +8,7 @@ import (
 func DeletePkg(pkg []string) bool {
 
 	// Open Badger
-	db := badgers.MainDb("/tmp/badger/outdate")
+	db := badgers.MainDb("/tmp/choco/outdate")
 
 	// Get the package name
 	pkgName := pkg[0]

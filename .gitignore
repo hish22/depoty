@@ -3,3 +3,5 @@ depoty.exe
 *.zip
 
 /zip_files
+
+/installer

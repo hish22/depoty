@@ -8,7 +8,7 @@ import (
 
 func OutdatedList() {
 	// open Badger
-	db := badgers.MainDb("/tmp/badger/outdate")
+	db := badgers.MainDb("/tmp/choco/outdate")
 
 	// Close Badger
 	defer db.Close()

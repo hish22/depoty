@@ -9,7 +9,7 @@ import (
 func ListPkgs() []string {
 
 	// Open DB
-	db := badgers.MainDb("/tmp/badger/outdate")
+	db := badgers.MainDb("/tmp/choco/outdate")
 
 	// Close DB
 	defer db.Close()
