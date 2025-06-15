@@ -72,10 +72,10 @@ Additional functions:
 > [!NOTE]
 > This command will only delete packages other than Chocolatey or its extensions.
 
-- Drop/Delete all installed packages `F9`
-
 > [!WARNING]
 > Version 1.0.0 of Depoty will automatically uninstall Depoty if it was installed via Chocolatey and Drop all command used.
+
+- Drop/Delete all installed packages `F9`
 
 > [!NOTE]
 > This command will update only the outdated packages.
