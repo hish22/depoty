@@ -55,10 +55,6 @@ depoty
 
 3. Main Viewport: You'll be presented with the main viewport where you can manage packages.
 
-<p align="center">
-<img src="assets/Images/depoty_showcase.png" alt="logo">
-</p>
-
 ## 📌 Key Functions
 
 - Install a package by pressing `CTRL + D`
