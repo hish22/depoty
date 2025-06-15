@@ -32,7 +32,7 @@ func Insert(db *badger.DB, key []byte, value []byte) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Value inserted")
+	fmt.Println("Value inserted: ", string(value))
 
 }
 
@@ -44,6 +44,8 @@ func Delete(db *badger.DB, key []byte) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("Key deleted: ", key)
 }
 
 func Read(db *badger.DB, key []byte) ([]byte, error) {

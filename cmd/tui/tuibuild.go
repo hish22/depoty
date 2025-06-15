@@ -1,6 +1,10 @@
 package tui
 
 import (
+	"depoty/cmd/tui/fetch"
+	"depoty/cmd/tui/list"
+	"depoty/cmd/tui/operation"
+	"depoty/cmd/tui/textsearch"
 	"depoty/internal/deletion"
 	"depoty/internal/installation"
 	"depoty/internal/updation"
@@ -17,12 +21,12 @@ func TuiStart() {
 
 	// Installed Packages Table.
 	packageTable := tview.NewTable()
-	listOfPkgs := ListWholePkgs(packageTable)
+	listOfPkgs := list.ListWholePkgs(packageTable)
 
 	// the (flex Box,search Bar,searching Text).
-	SearchFlex, installPkg, textPkgs := searchPkgs()
+	SearchFlex, installPkg, textPkgs := textsearch.SearchPkgs()
 	// List found packages Table.
-	foundPkgsTable := ListFoundPkgs()
+	foundPkgsTable := list.ListFoundPkgs()
 
 	// Search and packages containers Flex
 	pkgsFlex := tview.NewFlex().SetDirection(tview.FlexRow).
@@ -35,16 +39,16 @@ func TuiStart() {
 	pkgInfo.SetBorder(true).SetTitle("ℹ️Package Information")
 
 	// Fetch the installed package information.
-	fetchInstalledPkgs(app, pkgInfo, packageTable)
+	fetch.FetchInstalledPkgs(app, pkgInfo, packageTable)
 
 	// Fetch the found package information.
-	fetchFoundPkgs(app, pkgInfo, foundPkgsTable)
+	fetch.FetchFoundPkgs(app, pkgInfo, foundPkgsTable)
 
 	// Start searching by pressing Enter.
-	performSearchingOperation(installPkg, foundPkgsTable)
+	operation.PerformSearchingOperation(installPkg, foundPkgsTable)
 
 	// Dynamic package name showing
-	dynamicSearchingText(foundPkgsTable, textPkgs)
+	textsearch.DynamicSearchingText(foundPkgsTable, textPkgs)
 
 	// Create Modal and page to Show Keys information
 	keyInfo := guideInfoModalPage()
@@ -66,25 +70,28 @@ func TuiStart() {
 		AddItem(guideFrame, 0, 2, false)
 
 	// Create Confirmation box & Handle the installation process
-	InstallConfModal := OperationOnPackage("Are you sure you want to install this package?", installation.InstallPkg, app, foundPkgsTable, rowFlex, "Package successfully installed", "Package installation failed")
+	InstallConfModal := operation.OperationOnPackage("Are you sure you want to install this package?", installation.InstallPkg, app, foundPkgsTable, rowFlex, "Package successfully installed", "Package installation failed")
 
 	// Handle the installation button & press (To Trigger the process of installation)
 	TriggerInstallProcess(tcell.KeyCtrlD, app, foundPkgsTable, InstallConfModal)
 
 	// Create Confirmation box & Handle the updation process
-	UpdateconfModal := OperationOnPackage("Are you sure you want to Update this package?", updation.UpdatePkg, app, packageTable, rowFlex, "Package successfully updated", "Package update failed")
+	UpdateconfModal := operation.OperationOnPackage("Are you sure you want to Update this package?", updation.UpdatePkg, app, packageTable, rowFlex, "Package successfully updated", "Package update failed")
 
 	// Create Confirmation box & Handle the Deletion process
-	DeleteconfModal := OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex, "Package successfully deleted", "Package deletion failed")
+	DeleteconfModal := operation.OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex, "Package successfully deleted", "Package deletion failed")
 
 	// Create Confirmation box & Handle the drop packages process
-	DropconfModal := DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex, "Packages successfully dropped", "Failed to drop packages")
+	DropconfModal := operation.DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex, "Packages successfully dropped", "Failed to drop packages")
+
+	// Create Confirmation box & Handle the Update all packages process
+	UpgradeconfModal := operation.UpdateAllPkgsOperation("Are you sure you want to Update all installed packages?", updation.UpdateAllPkgs, app, packageTable, rowFlex, "Packages successfully updated", "Failed to Update packages")
 
 	// Slice of keys
-	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF9}
+	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF9, tcell.KeyF10}
 
 	// Handle the Update & Deletion button & press (To Trigger the process of Updation / Deletion)
-	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal, DropconfModal)
+	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal, DropconfModal, UpgradeconfModal)
 
 	// Nabigation and focues change + Handle refresh trigger
 	// Also change the text under the search to blank if searchFlex losed focus
@@ -148,7 +155,7 @@ func TuiStart() {
 		// Refresh the installed packages
 		if event.Key() == tcell.KeyCtrlR {
 			packageTable.Clear()
-			Contentlist := RefreshWholePkgs(packageTable, &listOfPkgs)
+			Contentlist := list.RefreshWholePkgs(packageTable, &listOfPkgs)
 			for i, content := range Contentlist {
 				packageTable.SetCell(i, 0, tview.NewTableCell(content))
 			}
@@ -162,13 +169,13 @@ func TuiStart() {
 	})
 
 	// Search in installed packages
-	SearchInInstalledPkgs(installPkg, textPkgs, listOfPkgs, packageTable)
+	textsearch.SearchInInstalledPkgs(installPkg, textPkgs, listOfPkgs, packageTable)
 
 	// Change the nevigation data if it is focused in packagesTable
 	packageTable.SetFocusFunc(func() {
 		guideFrame.Clear().
 			AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
-			AddText("CTRL + U (Update package) / CTRL + Q (Delete package) / F9 (Drop All)", false, tview.AlignRight, tcell.ColorWhite)
+			AddText("CTRL + U (Update) / CTRL + Q (Delete) / F9 (Drop) / F10 (upgrade)", false, tview.AlignRight, tcell.ColorWhite)
 	})
 	// Change the nevigation data if it is focused in foundPkgsTable
 	foundPkgsTable.SetFocusFunc(func() {

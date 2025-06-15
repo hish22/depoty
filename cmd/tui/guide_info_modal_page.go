@@ -4,17 +4,17 @@ import "github.com/rivo/tview"
 
 func guideInfoModalPage() *tview.Pages {
 	KeyDataModal := tview.NewModal().SetText(`
+		
+		Navigation Keys:
 		CTRL + S (for search)
-
 		CTRL + F (Found Packages)
-
 		CTRL + P (Installed Packges)
-
 		CTRL + N (Package Info)
 
-		CTRL + R (Refresh Installed packages)
-
+		General keys:
+		CTRL + R (Refresh packages & viewport)
 		Esc (Back)
+		
 	`)
 
 	KeyDataModal.SetTitle("Keys Information")

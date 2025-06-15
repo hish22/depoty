@@ -4,13 +4,19 @@ import (
 	"bufio"
 	"fmt"
 	"os/exec"
+	"runtime"
 	"strings"
 	"sync"
 )
 
 func ExecutePrevScript(script string, needle string) (bool, error) {
 	scriptToEx := fmt.Sprintf(`%s %s`, script, needle)
-	cmd := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scriptToEx)
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scriptToEx)
+	} else {
+		cmd = exec.Command("bash", "-c", scriptToEx)
+	}
 
 	// Get pipes for stdout and stderr
 	stdoutPipe, err := cmd.StdoutPipe()
@@ -86,7 +92,12 @@ func ExecutePrevScript(script string, needle string) (bool, error) {
 func ExecuteScript(script string, needle string) string {
 	scriptToEx := fmt.Sprintf(`%s %s`, script, needle)
 
-	startScript := exec.Command("powershell", "-Command", scriptToEx)
+	var startScript *exec.Cmd
+	if runtime.GOOS == "windows" {
+		startScript = exec.Command("powershell", "-Command", scriptToEx)
+	} else {
+		startScript = exec.Command("bash", "c", scriptToEx)
+	}
 
 	outputOfStd, err := startScript.StdoutPipe()
 

@@ -1,10 +1,10 @@
 package deletion
 
-func DropAllPkgs(pkg []string) bool {
+func DropAllPkgs(pkgs []string) bool {
 	var success bool
 	i := 0
-	for i < len(pkg) {
-		success = DeletePkg(pkg)
+	for i < len(pkgs) {
+		success = DeletePkg(pkgs[i])
 		i++
 	}
 	return success
