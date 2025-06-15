@@ -32,7 +32,7 @@ Depoty can be installed using the following methods:
 
 - Download the binary from the <a href="https://github.com/hish22/depoty/releases">Releases</a> page.
 
-Next, run the MSI file to begin installing the program.
+Next, run the exe file to begin installing the program.
 
 ## 📝 Usage
 
