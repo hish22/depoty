@@ -79,7 +79,7 @@ Additional functions:
 - Update all installed packages `F10`
 
 - Navigation Button `TAB`
-- Return to main veiwport `ESC`
+- Return to main viewport `ESC`
 - Refresh the installed packages `CTRL + R`
 
 Other functions:
