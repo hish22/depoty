@@ -16,11 +16,11 @@ In addition to its core functionality, Depoty extends **Chocolatey** with additi
 ## 📸 Showcasing
 
 <p align="center">
-<img src="assets/Images/depoty_showcase.png" alt="logo">
+<img src="assets/Images/installed_packages.png" alt="logo">
 </p>
 
 <p align="center">
-<img src="assets/Images/depoty_found_pkgs.png" alt="logo">
+<img src="assets/Images/search_packages.png" alt="logo">
 </p>
 
 ## 🔧 Installation
