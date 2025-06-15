@@ -28,36 +28,11 @@ In addition to its core functionality, Depoty extends **Chocolatey** with additi
 Depoty can be installed using the following methods:
 
 > [!WARNING]
-> Since Chocolatey is designed for Windows, Depoty supports Windows only.
-
-### Method 1: Manual Download
+> Since Chocolatey is designed for Windows, Depoty supports Windows only (FOR NOW).
 
 - Download the binary from the <a href="https://github.com/hish22/depoty/releases">Releases</a> page.
 
-Next, initialize the environment variable for the path by adding the repository app path, or alternatively, execute the following PowerShell script.
-
-> [!NOTE]
-> Replace "C:\path\to\depoty\" with the path where depoty.exe is located.
-
-```powershell
-$currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
-$exeDir = "C:\path\to\depoty\"
-$newPath = "$exeDir;" + $currentPath
-[Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
-```
-
-### Method 2: Install via Chocolatey
-
-Alternatively, If you have Chocolatey installed, you can install Depoty by running the following command:
-
-> [!NOTE]
-> Integration with Chocolatey for installation is currently in progress, pending completion by the Chocolatey team.
-
-- We will soon integrate the installation process via Chocolatey.
-
-<!-- ```bash
-choco install depoty
-``` -->
+Next, run the MSI file to begin installing the program.
 
 ## 📝 Usage
 
@@ -101,6 +76,11 @@ Additional functions:
 
 > [!WARNING]
 > Version 1.0.0 of Depoty will automatically uninstall Depoty if it was installed via Chocolatey and Drop all command used.
+
+> [!NOTE]
+> This command will update only the outdated packages.
+
+- Update all installed packages `F10`
 
 - Navigation Button `TAB`
 - Return to main veiwport `ESC`
