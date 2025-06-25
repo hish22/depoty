@@ -45,7 +45,7 @@ func OperationOnPackage(msg string, operationCallback func(string) bool, app *tv
 		})
 }
 
-func UpdateAllPkgsOperation(msg string, operationCallback func([]string) bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex, sucessMsg string, errMsg string) *tview.Modal {
+func UpdateAllPkgsOperation(msg string, operationCallback func() bool, app *tview.Application, PkgsTable *tview.Table, rowFlex *tview.Flex, sucessMsg string, errMsg string) *tview.Modal {
 	// Create Confimation box & Handle the installation process
 	return tview.NewModal().
 		SetText(msg). // "Are you sure you want to install this package?"
@@ -53,17 +53,17 @@ func UpdateAllPkgsOperation(msg string, operationCallback func([]string) bool, a
 		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
 			if buttonLabel == "Yes" {
 				// Create Packges slice
-				var PkgSlice []string
+				// var PkgSlice []string
 				// Start inserting packages into the slice to be updated,
-				for i := 0; i < PkgsTable.GetRowCount(); i++ {
-					pkgRow := PkgsTable.GetCell(i, 0)
-					pkgText := pkgRow.Text
-					if strings.HasSuffix(pkgText, "(outdated)") {
-						splitBySpace := strings.Split(pkgRow.Text, " ")
-						PkgSlice = append(PkgSlice, splitBySpace[0])
+				// for i := 0; i < PkgsTable.GetRowCount(); i++ {
+				// 	pkgRow := PkgsTable.GetCell(i, 0)
+				// 	pkgText := pkgRow.Text
+				// 	if strings.HasSuffix(pkgText, "(outdated)") {
+				// 		splitBySpace := strings.Split(pkgRow.Text, " ")
+				// 		PkgSlice = append(PkgSlice, splitBySpace[0])
 
-					}
-				}
+				// 	}
+				// }
 				// if len(PkgSlice) == 0 {
 				// 	allUpdatedModal := messages.MessageModal(app, tview.NewModal(), rowFlex, PkgsTable, "All packages are updated", "All Updated message")
 				// 	app.SetRoot(allUpdatedModal, true).SetFocus(allUpdatedModal)
@@ -71,7 +71,8 @@ func UpdateAllPkgsOperation(msg string, operationCallback func([]string) bool, a
 
 				var success bool
 				app.Suspend(func() {
-					success = operationCallback(PkgSlice) // ex: installation.InstallPkg(pkgRowSlice[0])
+					//success = operationCallback(PkgSlice) // ex: installation.InstallPkg(pkgRowSlice[0])
+					success = operationCallback()
 				})
 				if success {
 					// Update the Installed Packages list
