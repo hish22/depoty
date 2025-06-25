@@ -1,8 +1,9 @@
+//go:build windows
+
 package test
 
 import (
 	"depoty/cmd/cli/core"
-	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -12,7 +13,7 @@ func TestCommand() {
 		Use:   "test",
 		Short: "Testing.",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("This is testing command!")
+			println("This is test command!")
 		},
 	}
 	core.RootCommand.AddCommand(TestCommand)

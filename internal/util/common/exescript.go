@@ -15,7 +15,7 @@ func ExecutePrevScript(script string, needle string) (bool, error) {
 	if runtime.GOOS == "windows" {
 		cmd = exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-Command", scriptToEx)
 	} else {
-		cmd = exec.Command("bash", "-c", scriptToEx)
+		cmd = exec.Command("sudo", "bash", "-c", scriptToEx)
 	}
 
 	// Get pipes for stdout and stderr
@@ -96,7 +96,7 @@ func ExecuteScript(script string, needle string) string {
 	if runtime.GOOS == "windows" {
 		startScript = exec.Command("powershell", "-Command", scriptToEx)
 	} else {
-		startScript = exec.Command("bash", "c", scriptToEx)
+		startScript = exec.Command("bash", "-c", scriptToEx)
 	}
 
 	outputOfStd, err := startScript.StdoutPipe()

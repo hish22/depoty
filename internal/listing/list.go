@@ -3,11 +3,24 @@ package listing
 import (
 	"depoty/internal/badgers"
 	"depoty/internal/util/common"
+	"runtime"
 	"strings"
 )
 
 func ListPkgs() []string {
 
+	switch runtime.GOOS {
+	case "windows":
+		return listchoco()
+	case "linux":
+		return listapt()
+	default:
+		return make([]string, 0)
+	}
+
+}
+
+func listchoco() []string {
 	// Open DB
 	db := badgers.MainDb("/tmp/choco/outdate")
 
@@ -36,6 +49,33 @@ func ListPkgs() []string {
 		}
 
 	}
-
 	return listSliceSep
+}
+
+func listapt() []string {
+
+	// Open DB
+	db := badgers.MainDb("/tmp/apt/outdate")
+
+	// Close DB
+	defer db.Close()
+
+	// Execute apt list to show installed packages
+	text := common.ExecuteScript("apt list --installed", "")
+	// new slice splited by \n
+	var installed []string = strings.Split(text, "\n")
+	// empty slice of strings
+	var installed_names []string
+	// loop throguh names and split by (/)
+	for i, v := range installed {
+		name := strings.Split(v, "/")
+		installed_names = append(installed_names, name[0])
+		_, err := badgers.Read(db, []byte(name[0]))
+		// If found outdated package, then add outdated tag.
+		if err == nil {
+			installed_names[i] += " (outdated)"
+		}
+	}
+	// return the installed packages
+	return installed_names[0 : len(installed_names)-1]
 }
