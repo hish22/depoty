@@ -1,4 +1,4 @@
-//go:build windows
+//go:build linux
 
 package initalization
 
@@ -11,14 +11,14 @@ import (
 
 func EntryPoint() {
 
-	db := badgers.MainDb("/system/choco/config")
+	db := badgers.MainDb("/system/apt/config")
 
 	defer db.Close()
 
 	item, err := badgers.Read(db, []byte("initDone"))
 
 	// Install Related dependencies
-	InstallChoco()
+	// Nothing to install in linux
 
 	if err != nil {
 		fmt.Println("The configuration process is not initialized yet.")
