@@ -3,7 +3,9 @@
 package build
 
 import (
+	"depoty/cmd/clilinux/cache"
 	"depoty/cmd/clilinux/core"
+	"depoty/cmd/clilinux/initd"
 	"depoty/cmd/clilinux/test"
 	"log"
 	"os"
@@ -12,13 +14,13 @@ import (
 func CreateCommands() {
 
 	// Init the "init" command.
-	// initd.MainInitCommand()
+	initd.MainInitCommand()
 
 	// Test commands
 	test.TestCommand()
 
 	// Clear Cache command
-	// cache.ClearCahce()
+	cache.ClearCahce()
 
 	// Executing the main Command
 	// Error check regarding the root command

@@ -15,16 +15,17 @@ func TestCommand() {
 		Use:   "test",
 		Short: "Testing.",
 		Run: func(cmd *cobra.Command, args []string) {
-			text := common.ExecuteScript("apt list --installed", "")
+			text := common.ExecuteScript("apt list --upgradable", "")
 			var installed []string = strings.Split(text, "\n")
 			var installed_names []string
 			for _, v := range installed {
 				name := strings.Split(v, "/")
 				installed_names = append(installed_names, name[0])
 			}
-			for _, v := range installed_names {
+			for _, v := range installed_names[0 : len(installed_names)-1] {
 				println(v)
 			}
+			// println("Testing command in linux")
 		},
 	}
 	core.RootCommand.AddCommand(TestCommand)
