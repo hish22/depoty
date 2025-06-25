@@ -53,7 +53,5 @@ var RootCommand = &cobra.Command{
 		fmt.Println("Starting Depoty..")
 
 		tui.TuiStart()
-		fmt.Println("Soon with apt package manager")
-
 	},
 }

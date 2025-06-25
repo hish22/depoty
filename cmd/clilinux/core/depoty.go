@@ -6,6 +6,7 @@ import (
 	"depoty/cmd/tui"
 	"depoty/internal/badgers"
 	"depoty/internal/listing"
+	"depoty/internal/util/common"
 	"fmt"
 	"log"
 
@@ -19,7 +20,7 @@ var RootCommand = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Open badger
-		dbConfig := badgers.MainDb("/system/choco/config")
+		dbConfig := badgers.MainDb("/system/apt/config")
 
 		fmt.Println("Checking Initialization Values..")
 		// Check if init process is done
@@ -34,13 +35,16 @@ var RootCommand = &cobra.Command{
 		// Check Outdated Packages
 		listing.OutdatedList()
 
+		// Update apt packages
+		fmt.Println("Update apt package list => apt update")
+		common.ExecutePrevScript("apt update", "")
+
 		fmt.Println("Fetching Packages list...")
 
 		// Start the TUI app
 		fmt.Println("Starting Depoty..")
 
 		tui.TuiStart()
-		fmt.Println("Soon with apt package manager")
 
 	},
 }
