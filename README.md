@@ -4,7 +4,7 @@
 ![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
 
 <p align="center">
-<img src="assets/logo/depotyNewLogo.png" alt="logo">
+<img src="assets/logo/depotyBackground.png" alt="logo">
 </p>
 
 > [!NOTE]
@@ -12,7 +12,7 @@
 
 ## 📖 Description
 
-Depoty is a powerful extension of the Chocolatey and APT package managers, offering users a unified and intuitive Terminal User Interface (TUI) for managing software packages across both Windows and Linux systems. Designed with simplicity and usability in mind, Depoty transforms complex command-line operations into a user-friendly experience, ideal for users who prefer a more visual yet lightweight approach.
+Depoty is an extension of the Chocolatey and APT package managers, offering users a unified and intuitive Terminal User Interface (TUI) for managing software packages across both Windows and Linux systems. Designed with simplicity and usability in mind, Depoty transforms complex command-line operations into a user-friendly experience, ideal for users who prefer a more visual yet lightweight approach.
 
 ## 📸 Showcasing
 
