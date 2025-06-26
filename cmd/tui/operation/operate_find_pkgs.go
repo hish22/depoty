@@ -2,6 +2,7 @@ package operation
 
 import (
 	"depoty/internal/finding"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -23,30 +24,51 @@ func OperateFindingPkgs(installPkg *tview.InputField, PkgsTable *tview.Table) {
 
 	pkgs := <-pkgChan
 
-	// Check if no packages found, else start iterating through these packages
-	if len(pkgs)-1 == 0 {
-		PkgsTable.SetBorderColor(tcell.ColorRed)
-		PkgsTable.SetTitle("0 packages found.")
-	} else {
-		j := 0
-		// Total number of packages in string type
-		numberOfPkgs := strconv.Itoa(len(pkgs) - 1)
+	switch runtime.GOOS {
+	case "windows":
+		// Check if no packages found, else start iterating through these packages
+		if len(pkgs)-1 == 0 {
+			PkgsTable.SetBorderColor(tcell.ColorRed)
+			PkgsTable.SetTitle("0 packages found.")
+		} else {
+			j := 0
+			// Total number of packages in string type
+			numberOfPkgs := strconv.Itoa(len(pkgs) - 1)
 
-		// Set the border green color since we found packges to list
-		PkgsTable.SetBorderColor(tcell.ColorGreen)
-		PkgsTable.SetTitle(numberOfPkgs + " packages found.")
-		for i := 0; i < len(pkgs); i++ {
+			// Set the border green color since we found packges to list
+			PkgsTable.SetBorderColor(tcell.ColorGreen)
+			PkgsTable.SetTitle(numberOfPkgs + " packages found.")
+			for i := 0; i < len(pkgs); i++ {
 
-			// Replace the | with space " "
-			finalPkg := strings.Replace(pkgs[i], "|", " ", 1)
+				// Replace the | with space " "
+				finalPkg := strings.Replace(pkgs[i], "|", " ", 1)
 
-			// break if we reached the last element
-			if len(pkgs)-1 == i {
-				break
+				// break if we reached the last element
+				if len(pkgs)-1 == i {
+					break
+				}
+				// Populate the table with found packages
+				PkgsTable.SetCell(j, 0, tview.NewTableCell(finalPkg))
+				j++
 			}
-			// Populate the table with found packages
-			PkgsTable.SetCell(j, 0, tview.NewTableCell(finalPkg))
-			j++
+		}
+	case "linux":
+		if len(pkgs) == 0 {
+			PkgsTable.SetBorderColor(tcell.ColorRed)
+			PkgsTable.SetTitle("0 packages found.")
+		} else {
+			j := 0
+			// Total number of packages in string type
+			numberOfPkgs := strconv.Itoa(len(pkgs))
+
+			// Set the border green color since we found packges to list
+			PkgsTable.SetBorderColor(tcell.ColorGreen)
+			PkgsTable.SetTitle(numberOfPkgs + " packages found.")
+			for i := 0; i < len(pkgs); i++ {
+				// Populate the table with found packages
+				PkgsTable.SetCell(j, 0, tview.NewTableCell(pkgs[i]))
+				j++
+			}
 		}
 	}
 

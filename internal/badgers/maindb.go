@@ -32,7 +32,7 @@ func Insert(db *badger.DB, key []byte, value []byte) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Value inserted: ", string(value))
+	fmt.Println("Value inserted: ", string(key), string(value))
 
 }
 
