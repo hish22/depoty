@@ -4,7 +4,7 @@
 ![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
 
 <p align="center">
-<img src="assets/logo/depotyBackground.png" alt="logo">
+<img src="assets/logo/depotyNewLogo.png" alt="logo">
 </p>
 
 > [!NOTE]
