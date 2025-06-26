@@ -77,5 +77,5 @@ func listapt() []string {
 		}
 	}
 	// return the installed packages
-	return installed_names[0 : len(installed_names)-1]
+	return installed_names[1 : len(installed_names)-1]
 }

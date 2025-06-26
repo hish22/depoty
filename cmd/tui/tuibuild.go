@@ -9,6 +9,7 @@ import (
 	"depoty/internal/installation"
 	"depoty/internal/updation"
 	"fmt"
+	"runtime"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -82,13 +83,25 @@ func TuiStart() {
 	DeleteconfModal := operation.OperationOnPackage("Are you sure you want to Delete this package?", deletion.DeletePkg, app, packageTable, rowFlex, "Package successfully deleted", "Package deletion failed")
 
 	// Create Confirmation box & Handle the drop packages process
-	DropconfModal := operation.DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex, "Packages successfully dropped", "Failed to drop packages")
+	var DropconfModal *tview.Modal
+	if runtime.GOOS == "windows" {
+		DropconfModal = operation.DropAllPkgsOperation("Are you sure you want to Delete all installed packges?", deletion.DropAllPkgs, app, packageTable, rowFlex, "Packages successfully dropped", "Failed to drop packages")
+	}
 
 	// Create Confirmation box & Handle the Update all packages process
 	UpgradeconfModal := operation.UpdateAllPkgsOperation("Are you sure you want to Update all installed packages?", updation.UpdateAllPkgs, app, packageTable, rowFlex, "Packages successfully updated", "Failed to Update packages")
 
+	// Specifiy update all key based on platform
+	var updateKey tcell.Key
+	switch runtime.GOOS {
+	case "windows":
+		updateKey = tcell.KeyF10
+	case "linux":
+		updateKey = tcell.KeyF2
+	}
+
 	// Slice of keys
-	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF9, tcell.KeyF10}
+	keysOfOperation := []tcell.Key{tcell.KeyCtrlU, tcell.KeyCtrlQ, tcell.KeyF12, updateKey}
 
 	// Handle the Update & Deletion button & press (To Trigger the process of Updation / Deletion)
 	TriggerUpdAndDelProcess(keysOfOperation, app, packageTable, UpdateconfModal, DeleteconfModal, DropconfModal, UpgradeconfModal)
@@ -173,9 +186,15 @@ func TuiStart() {
 
 	// Change the nevigation data if it is focused in packagesTable
 	packageTable.SetFocusFunc(func() {
-		guideFrame.Clear().
-			AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
-			AddText("CTRL + U (Update) / CTRL + Q (Delete) / F9 (Drop) / F10 (upgrade)", false, tview.AlignRight, tcell.ColorWhite)
+		if runtime.GOOS == "windows" {
+			guideFrame.Clear().
+				AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
+				AddText("CTRL + U (Update) / CTRL + Q (Delete) / F9 (Drop) / F10 (upgrade)", false, tview.AlignRight, tcell.ColorWhite)
+		} else {
+			guideFrame.Clear().
+				AddText("F1 (Keys Info) / TAB (navigation)", false, tview.AlignLeft, tcell.ColorWhite).
+				AddText("CTRL + U (Update) / CTRL + Q (Delete) / F2 (upgrade)", false, tview.AlignRight, tcell.ColorWhite)
+		}
 	})
 	// Change the nevigation data if it is focused in foundPkgsTable
 	foundPkgsTable.SetFocusFunc(func() {

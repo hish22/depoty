@@ -56,15 +56,16 @@ func Outdatedapt() {
 	// new slice splited by \n
 	var outdated []string = strings.Split(text, "\n")
 	// empty slice of strings
-	var outdated_names []string
+	// var outdated_names []string
 	// loop throguh names and split by (/)
-	for _, v := range outdated {
-		name := strings.Split(v, "/")
-		outdated_names = append(outdated_names, name[0])
+	var i int
+	for i = 1; i < len(outdated)-1; i++ {
+		name := strings.Split(outdated[i], "/")[0]
+		// outdated_names = append(outdated_names, name[0])
 		// Check If the value doesn't exsist.
-		value, err := badgers.Read(db, []byte(name[0]))
+		value, err := badgers.Read(db, []byte(name))
 		if err != nil {
-			item := []byte(name[0])
+			item := []byte(name)
 			badgers.Insert(db, item, value)
 		}
 	}

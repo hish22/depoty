@@ -23,7 +23,7 @@ func findPkgChocoInfo(pkgName string) string {
 }
 
 func findPkgAptInfo(pkgName string) string {
-	info := common.ExecuteScript("apt search", pkgName)
+	info := common.ExecuteScript("apt show", pkgName)
 
 	return info
 }

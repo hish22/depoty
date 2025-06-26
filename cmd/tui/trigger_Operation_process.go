@@ -1,6 +1,8 @@
 package tui
 
 import (
+	"runtime"
+
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
@@ -39,7 +41,7 @@ func TriggerUpdAndDelProcess(key []tcell.Key, app *tview.Application, PkgsTable 
 				app.SetRoot(DeleteModal, true).SetFocus(DeleteModal)
 			}
 			// Start the Drop process if F9 pressed
-		} else if event.Key() == key[2] {
+		} else if event.Key() == key[2] && runtime.GOOS == "windows" {
 			// No Droping if installed packages is empty
 			if PkgsTable.GetRowCount() != 0 {
 				// Show Confirmation box
@@ -47,7 +49,7 @@ func TriggerUpdAndDelProcess(key []tcell.Key, app *tview.Application, PkgsTable 
 			}
 			// Start the update all packages process if F10 pressed
 		} else if event.Key() == key[3] {
-			// No Droping if installed packages is empty
+			// No updating if installed packages is empty
 			if PkgsTable.GetRowCount() != 0 {
 				// Show Confirmation box
 				app.SetRoot(UpdateAllModal, true).SetFocus(UpdateAllModal)
