@@ -4,14 +4,15 @@
 ![GitHub Release](https://img.shields.io/github/v/release/hish22/depoty)
 
 <p align="center">
-<img src="assets/logo/depotyLogo_V1_withbg.png" alt="logo">
+<img src="assets/logo/depotyNewLogo.png" alt="logo">
 </p>
+
+> [!NOTE]
+> Depoty now supports Debian based linux.
 
 ## 📖 Description
 
-Depoty is an extension of the **Chocolatey** package manager, offering users the ability to manage and interact with Chocolatey through an intuitive, terminal user interface (TUI). This lightweight application aims to simplify and enhance the user experience by providing a more accessible alternative to command-line operations, especially for those who prefer a TUI environment.
-
-In addition to its core functionality, Depoty extends **Chocolatey** with additional features such as package search, installation, updates, and uninstallation—all in a streamlined, easy-to-navigate interface. it is an ideal choice for anyone looking to manage Chocolatey in a more visual and efficient manner."
+Depoty is a powerful extension of the Chocolatey and APT package managers, offering users a unified and intuitive Terminal User Interface (TUI) for managing software packages across both Windows and Linux systems. Designed with simplicity and usability in mind, Depoty transforms complex command-line operations into a user-friendly experience, ideal for users who prefer a more visual yet lightweight approach.
 
 ## 📸 Showcasing
 
@@ -23,16 +24,39 @@ In addition to its core functionality, Depoty extends **Chocolatey** with additi
 <img src="assets/Images/search_packages.png" alt="logo">
 </p>
 
+<p align="center">
+<img src="assets/Images/demo_linux.png" alt="logo">
+</p>
+
 ## 🔧 Installation
 
 Depoty can be installed using the following methods:
 
-> [!WARNING]
-> Since Chocolatey is designed for Windows, Depoty supports Windows only (FOR NOW).
+### Windows:
 
 - Download the binary from the <a href="https://github.com/hish22/depoty/releases">Releases</a> page.
 
 Next, run the exe file to begin installing the program.
+
+### Linux(Debian based):
+
+- Fetch the binary from github:
+
+```bash
+wget https://github.com/hish22/depoty/releases/download/v1.1.0/depoty
+```
+
+- Make it executable
+
+```bash
+chmod +x depoty
+```
+
+- Move to a system path
+
+```bash
+sudo mv depoty /usr/local/bin/
+```
 
 ## 📝 Usage
 
@@ -49,8 +73,16 @@ depoty init
 
 2. Start the TUI: Once initialized, start the TUI (Text User Interface) by typing:
 
+on windows(as adminstrater):
+
 ```bash
 depoty
+```
+
+on linux:
+
+```bash
+sudo depoty
 ```
 
 3. Main Viewport: You'll be presented with the main viewport where you can manage packages.
@@ -74,9 +106,18 @@ Additional functions:
 - Drop/Delete all installed packages `F9`
 
 > [!NOTE]
+> This command only works on windows (choco).
+
+> [!NOTE]
 > This command will update only the outdated packages.
 
+on windows:
+
 - Update all installed packages `F10`
+
+on linux:
+
+- Update all installed packages `F2`
 
 - Navigation Button `TAB`
 - Return to main viewport `ESC`
