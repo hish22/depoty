@@ -106,7 +106,7 @@ Additional functions:
 - Drop/Delete all installed packages `F9`
 
 > [!NOTE]
-> This command only works on windows (choco).
+> Drop all command only works on windows (choco).
 
 > [!NOTE]
 > This command will update only the outdated packages.
